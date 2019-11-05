@@ -39,8 +39,31 @@ namespace CodingInterview
 
         int[] RemoveElement(int[] arrayOfNumbers, int elementToRemove)
         {
-            return arrayOfNumbers.Where(element => element != elementToRemove)
+            return arrayOfNumbers
+                .Where(element => element != elementToRemove)
                 .ToArray();
+        }
+
+        int[] MoveZeros(int[] arrayOfNumbers)
+        {
+            var zeroCount = 0;
+            var listOfElements = new List<int>();
+            for(int index = 0; index < arrayOfNumbers.Length; index++)
+            {
+                var actualElement = arrayOfNumbers[index];
+                if (actualElement == 0)
+                {
+                    zeroCount++;
+                }
+                else
+                {
+                    listOfElements.Add(actualElement);
+                }
+            }
+            listOfElements
+                .AddRange(Enumerable.Range(1, zeroCount)
+                .Select(x => 0));
+            return listOfElements.ToArray();
         }
 
         [Test]
@@ -75,6 +98,17 @@ namespace CodingInterview
             var arrayWithRemoveElement = RemoveElement(arrayWithElements, elementToRemove);
 
             Assert.AreEqual(expectedArrayWithElements, arrayWithRemoveElement);
+        }
+
+        [Test]
+        public void MoveZeros_4()
+        {
+            var arrayWithZeros = new int[] { 1, 0, 5, 0, 0, 3};
+            var expectedArrayWithZerosInTheEnd = new int[] { 1, 5, 3, 0, 0, 0 };
+
+            var arrayWithRemoveElement = MoveZeros(arrayWithZeros);
+
+            Assert.AreEqual(expectedArrayWithZerosInTheEnd, arrayWithRemoveElement);
         }
     }
 }
