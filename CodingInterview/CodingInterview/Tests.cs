@@ -37,6 +37,12 @@ namespace CodingInterview
             return numbersWithTwoDuplicates.ToArray();
         }
 
+        int[] RemoveElement(int[] arrayOfNumbers, int elementToRemove)
+        {
+            return arrayOfNumbers.Where(element => element != elementToRemove)
+                .ToArray();
+        }
+
         [Test]
         public void RemoveDuplicatesFromSortedArray_1()
         {
@@ -57,6 +63,18 @@ namespace CodingInterview
             var sortedArrayWithTwoDuplicatesCalculated = LeaveTwoDuplicates(sortedArrayWithDuplicates);
 
             Assert.AreEqual(expectedSortedArrayWithTwoDuplicates, sortedArrayWithTwoDuplicatesCalculated);
+        }
+
+        [Test]
+        public void RemoveElement_3()
+        {
+            var arrayWithElements = new int[] { 1, 5, 3, 3, 6, 1, 8, 3, 9, 7 };
+            var expectedArrayWithElements = new int[] { 1, 5, 6, 1, 8, 9, 7 };
+            var elementToRemove = 3;
+
+            var arrayWithRemoveElement = RemoveElement(arrayWithElements, elementToRemove);
+
+            Assert.AreEqual(expectedArrayWithElements, arrayWithRemoveElement);
         }
     }
 }
