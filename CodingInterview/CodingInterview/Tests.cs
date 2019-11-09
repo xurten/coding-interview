@@ -150,6 +150,25 @@ namespace CodingInterview
             return listOfAnswers.ToArray();
         }
 
+        string[] GetMissingRanges(int lower, int upper, int[] inputArray)
+        {
+            if (inputArray == null || inputArray.Length == 0)
+                throw new ArgumentNullException("InputArray needs to have elements");
+
+            if(lower > upper && lower >= 0 && upper >= 0)
+                throw new ArgumentException("Correct arguments");
+
+            var negativeList = Enumerable.Range(lower, upper - lower + 1)
+               .Where(element => !inputArray.Any(item => item == element));
+
+            return GetSummaryRanges(negativeList.ToArray());
+        }
+
+        int[][] GetMergeIntervals(int[][] inputArray)
+        {
+            return inputArray;
+        }
+
        [Test]
         public void RemoveDuplicatesFromSortedArray_1()
         {
@@ -235,5 +254,40 @@ namespace CodingInterview
             //then
             Assert.AreEqual(expectedArray, outputArray);
         }
-    }
+
+        [Test]
+        public void MissingRanges_10()
+        {
+            //given
+            var inputArray = new int[] { 0, 1, 3, 50, 75 };
+            int lower = 0;
+            int upper = 99;
+            var expectedArray = new string[] { "2", "4->49", "51->74", "76->99" };
+            //when
+            var outputArray = GetMissingRanges(lower, upper, inputArray);
+            //then
+            Assert.AreEqual(expectedArray, outputArray);
+        }
+
+        [Test]
+        public void MergeIntervals_11()
+        {
+            //given
+            var inputArray = new int[][] {
+                new int[] { 1, 3 },
+                new int[] { 2, 6 },
+                new int[] { 8, 10 },
+                new int[] { 15, 18 }
+            };
+            var expectedArray = new int[][] {
+                new int[] { 1, 6 },
+                new int[] { 8, 10 },
+                new int[] { 15, 18 }
+            };
+            //when
+            var outputArray = GetMergeIntervals(inputArray);
+            //then
+            Assert.AreEqual(expectedArray, outputArray);
+        }
+}
 }
