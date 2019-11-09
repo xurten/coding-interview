@@ -67,24 +67,6 @@ namespace CodingInterview
             return listOfElements.ToArray();
         }
 
-        int GetTrappingRainWater(int[] elevationMap)
-        {
-            if (elevationMap == null || elevationMap.Length == 0)
-                return 0;
-            int waterToDrop = 0;
-            int level = 0;
-            int left = 0;
-            int right = elevationMap.Length - 1;
-            while(left < right)
-            {
-                int lower = elevationMap[elevationMap[left] < elevationMap[right] ? left++ : right--];
-                level = Math.Max(lower, level);
-                waterToDrop += level - lower;
-                Console.WriteLine($"left{left} right{right} lower {lower} level {level} waterToDrop {waterToDrop}");
-            }
-            return waterToDrop;
-        }
-
         int [] GetProductofArrayExceptSelf(int [] inputArray)
         {
             if (inputArray == null || inputArray.Length == 0)
@@ -125,6 +107,11 @@ namespace CodingInterview
                     }
                 }
             }
+            return null;
+        }
+
+        List<string> GetSummaryRanges(int [] inputArray)
+        {
             return null;
         }
 
@@ -174,17 +161,6 @@ namespace CodingInterview
         }
 
         [Test]
-        public void TrappingRainWater_6()
-        {
-            var elevationMap = new int[] {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
-            var expectedValue = 6;
-
-            var rainWaterValue = GetTrappingRainWater(elevationMap);
-
-            Assert.AreEqual(expectedValue, rainWaterValue);
-        }
-
-        [Test]
         public void ProductofArrayExceptSelf_7()
         {
             var inputArray = new int[] { 1, 2, 3, 4};
@@ -203,6 +179,17 @@ namespace CodingInterview
             var expectedArray = new int[] { 4, 3 };
 
             var outputArray = GetMinimumSizeSubarraySum(inputArray, n);
+
+            Assert.AreEqual(expectedArray, outputArray);
+        }
+
+        [Test]
+        public void SummaryRanges_9()
+        {
+            var inputArray = new int[] { 0, 1, 2, 4, 5, 7};
+            var expectedArray = new string[] { "0->2", "4->5", "7" };
+
+            var outputArray = GetSummaryRanges(inputArray);
 
             Assert.AreEqual(expectedArray, outputArray);
         }
