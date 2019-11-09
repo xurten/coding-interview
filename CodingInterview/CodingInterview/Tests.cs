@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -66,6 +67,24 @@ namespace CodingInterview
             return listOfElements.ToArray();
         }
 
+        int GetTrappingRainWater(int[] elevationMap)
+        {
+            if (elevationMap == null || elevationMap.Length == 0)
+                return 0;
+            int waterToDrop = 0;
+            int level = 0;
+            int left = 0;
+            int right = elevationMap.Length - 1;
+            while(left < right)
+            {
+                int lower = elevationMap[elevationMap[left] < elevationMap[right] ? left++ : right--];
+                level = Math.Max(lower, level);
+                waterToDrop += level - lower;
+                Console.WriteLine($"left{left} right{right} lower {lower} level {level} waterToDrop {waterToDrop}");
+            }
+            return waterToDrop;
+        }
+
         [Test]
         public void RemoveDuplicatesFromSortedArray_1()
         {
@@ -109,6 +128,17 @@ namespace CodingInterview
             var arrayWithRemoveElement = MoveZeros(arrayWithZeros);
 
             Assert.AreEqual(expectedArrayWithZerosInTheEnd, arrayWithRemoveElement);
+        }
+
+        [Test]
+        public void TrappingRainWater_6()
+        {
+            var elevationMap = new int[] {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
+            var expectedValue = 6;
+
+            var rainWaterValue = GetTrappingRainWater(elevationMap);
+
+            Assert.AreEqual(expectedValue, rainWaterValue);
         }
     }
 }
