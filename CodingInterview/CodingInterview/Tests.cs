@@ -118,79 +118,86 @@ namespace CodingInterview
        [Test]
         public void RemoveDuplicatesFromSortedArray_1()
         {
+            //given
             var sortedArrayWithDuplicates = new int[] { 1, 3, 3, 6, 8, 8, 9 };
             var expectedSortedArrayWithoutDuplicates = new int[] { 1, 3, 6, 8, 9 };
-
+            //when
             var sortedArrayWithoutDuplicatesCalculated = RemoveDuplicates(sortedArrayWithDuplicates);
-
+            //then
             Assert.AreEqual(expectedSortedArrayWithoutDuplicates, sortedArrayWithoutDuplicatesCalculated);
         }
 
         [Test]
         public void RemoveDuplicatesFromSortedArray_2()
         {
+            //given
             var sortedArrayWithDuplicates = new int[] { 1, 3, 3, 3, 6, 8, 8, 9, 9, 9 };
             var expectedSortedArrayWithTwoDuplicates = new int[] { 1, 3, 3, 6, 8, 8, 9, 9 };
-
+            //when
             var sortedArrayWithTwoDuplicatesCalculated = LeaveTwoDuplicates(sortedArrayWithDuplicates);
-
+            //then
             Assert.AreEqual(expectedSortedArrayWithTwoDuplicates, sortedArrayWithTwoDuplicatesCalculated);
         }
 
         [Test]
         public void RemoveElement_3()
         {
+            //given
             var arrayWithElements = new int[] { 1, 5, 3, 3, 6, 1, 8, 3, 9, 7 };
             var expectedArrayWithElements = new int[] { 1, 5, 6, 1, 8, 9, 7 };
             var elementToRemove = 3;
-
+            //when
             var arrayWithRemoveElement = RemoveElement(arrayWithElements, elementToRemove);
-
+            //then
             Assert.AreEqual(expectedArrayWithElements, arrayWithRemoveElement);
         }
 
         [Test]
         public void MoveZeros_4()
         {
+            //given
             var arrayWithZeros = new int[] { 1, 0, 5, 0, 0, 3};
             var expectedArrayWithZerosInTheEnd = new int[] { 1, 5, 3, 0, 0, 0 };
-
+            //when
             var arrayWithRemoveElement = MoveZeros(arrayWithZeros);
-
+            //then
             Assert.AreEqual(expectedArrayWithZerosInTheEnd, arrayWithRemoveElement);
         }
 
         [Test]
         public void ProductofArrayExceptSelf_7()
         {
+            //given
             var inputArray = new int[] { 1, 2, 3, 4};
             var expectedArray = new int[] { 24, 12, 8, 6 };
-
+            //when
             var outputArray = GetProductofArrayExceptSelf(inputArray);
-
+            //then
             Assert.AreEqual(expectedArray, outputArray);
         }
 
         [Test]
         public void MinimumSizeSubarraySum_8()
         {
+            //given
             var inputArray = new int[] { 2, 3, 1, 2, 4, 3 };
             int n = 7;
             var expectedArray = new int[] { 4, 3 };
-
+            //when
             var outputArray = GetMinimumSizeSubarraySum(inputArray, n);
-
+            //then
             Assert.AreEqual(expectedArray, outputArray);
         }
 
         [Test]
         public void SummaryRanges_9()
         {
+            //given
             var inputArray = new int[] { 0, 1, 2, 4, 5, 7};
             var expectedArray = new string[] { "0->2", "4->5", "7" };
-
+            //when
             var outputArray = GetSummaryRanges(inputArray);
-
+            //then
             Assert.AreEqual(expectedArray, outputArray);
         }
     }
