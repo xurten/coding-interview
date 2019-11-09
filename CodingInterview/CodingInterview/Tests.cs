@@ -85,7 +85,21 @@ namespace CodingInterview
             return waterToDrop;
         }
 
-        [Test]
+        int [] GetProductofArrayExceptSelf(int [] inputArray)
+        {
+            if (inputArray == null || inputArray.Length == 0)
+                throw new ArgumentNullException("inputArray needs to have elements");
+            var outputArray = new List<int>();
+            for (int index = 0; index < inputArray.Length; index++)
+            {
+                outputArray.Add(inputArray
+                    .Where(element => element != inputArray[index])
+                    .Aggregate((firstElement, secondElement) => firstElement * secondElement));
+            }
+            return outputArray.ToArray();
+        }
+
+       [Test]
         public void RemoveDuplicatesFromSortedArray_1()
         {
             var sortedArrayWithDuplicates = new int[] { 1, 3, 3, 6, 8, 8, 9 };
@@ -139,6 +153,17 @@ namespace CodingInterview
             var rainWaterValue = GetTrappingRainWater(elevationMap);
 
             Assert.AreEqual(expectedValue, rainWaterValue);
+        }
+
+        [Test]
+        public void ProductofArrayExceptSelf_7()
+        {
+            var inputArray = new int[] { 1, 2, 3, 4};
+            var expectedArray = new int[] { 24, 12, 8, 6 };
+
+            var outputArray = GetProductofArrayExceptSelf(inputArray);
+
+            Assert.AreEqual(expectedArray, outputArray);
         }
     }
 }
