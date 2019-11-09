@@ -110,9 +110,44 @@ namespace CodingInterview
             return null;
         }
 
-        List<string> GetSummaryRanges(int [] inputArray)
+        string[] GetSummaryRanges(int [] inputArray)
         {
-            return null;
+            if (inputArray == null || inputArray.Length == 0)
+                throw new ArgumentNullException("inputArray needs to have elements");
+
+            var listOfAnswers = new List<string>();
+
+            for(int index = 0; index < inputArray.Length; index++)
+            {
+                var firstString = string.Empty;
+                bool found = false;
+                for(int insideIndex = index; insideIndex < inputArray.Length; insideIndex++)
+                {
+                    if(insideIndex + 1 < inputArray.Length && (inputArray[insideIndex + 1] - inputArray[insideIndex] == 1))
+                    {
+                        if(!found)
+                        {
+                            firstString = $"{inputArray[insideIndex]}";
+                        }
+                        found = true;
+                    }
+                    else
+                    {
+                        if(found)
+                        {
+                            string endString = inputArray[insideIndex].ToString();
+                            listOfAnswers.Add($"{firstString}->{endString}");
+                            index = insideIndex;
+                            break;
+                        }
+                        else
+                        {
+                            listOfAnswers.Add($"{inputArray[insideIndex]}");
+                        }
+                    }
+                }
+            }
+            return listOfAnswers.ToArray();
         }
 
        [Test]
