@@ -99,6 +99,35 @@ namespace CodingInterview
             return outputArray.ToArray();
         }
 
+        int[] GetMinimumSizeSubarraySum(int[] inputArray, int n)
+        {
+            var listOfSums = new List<int>();
+            var listOfNumbers = new List<int>();
+            var sum = 0;
+            for(int subArraySize = 2; subArraySize <= inputArray.Length - 1; subArraySize++)
+            { 
+                for (int index = 0; index <= inputArray.Length - 1; index++)
+                {
+                    sum += inputArray[index];
+                    listOfNumbers.Add(inputArray[index]);
+                    if (index % subArraySize == 1 && index != 0)
+                    {
+                        if(sum >= n)
+                        {
+                            listOfNumbers.ForEach(element => Console.Write(element + " "));
+                            Console.WriteLine($"sum = {sum}");
+                            return listOfNumbers.ToArray();
+                        }
+                        listOfSums.Add(sum);
+                        sum = 0;
+                        listOfNumbers.Clear();
+                        continue;
+                    }
+                }
+            }
+            return null;
+        }
+
        [Test]
         public void RemoveDuplicatesFromSortedArray_1()
         {
@@ -162,6 +191,18 @@ namespace CodingInterview
             var expectedArray = new int[] { 24, 12, 8, 6 };
 
             var outputArray = GetProductofArrayExceptSelf(inputArray);
+
+            Assert.AreEqual(expectedArray, outputArray);
+        }
+
+        [Test]
+        public void MinimumSizeSubarraySum_8()
+        {
+            var inputArray = new int[] { 2, 3, 1, 2, 4, 3 };
+            int n = 7;
+            var expectedArray = new int[] { 4, 3 };
+
+            var outputArray = GetMinimumSizeSubarraySum(inputArray, n);
 
             Assert.AreEqual(expectedArray, outputArray);
         }
