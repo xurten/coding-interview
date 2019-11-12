@@ -2,35 +2,34 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace CodingInterview
 {
     public class Tests
     {
-        int[] RemoveDuplicates(int[] arrayOfNumbers)
+        private static int[] RemoveDuplicates(IReadOnlyList<int> arrayOfNumbers)
         {
             var numbers = new HashSet<int>();
-            for (int index = 0; index < arrayOfNumbers.Length; index++)
+            foreach (var element in arrayOfNumbers)
             {
-                numbers.Add(arrayOfNumbers[index]);
+                numbers.Add(element);
             }
             return numbers.ToArray();
         }
 
-        int[] LeaveTwoDuplicates(int[] arrayOfNumbers)
+        private static int[] LeaveTwoDuplicates(IReadOnlyCollection<int> arrayOfNumbers)
         {
             var numbers = new HashSet<int>();
             var numbersWithTwoDuplicates = new List<int>();
-            for (int index = 0; index < arrayOfNumbers.Length; index++)
+            foreach (var element in arrayOfNumbers)
             {
-                numbers.Add(arrayOfNumbers[index]);
+                numbers.Add(element);
             }
 
-            for (int index = 0; index < numbers.Count; index++)
+            for (var index = 0; index < numbers.Count; index++)
             {
                 var actualValue = numbers.ElementAt(index);
-                if (arrayOfNumbers.Where(element => element == actualValue).Count() >= 2)
+                if (arrayOfNumbers.Count(element => element == actualValue) >= 2)
                 {
                     numbersWithTwoDuplicates.Add(actualValue);
                 }
@@ -39,20 +38,19 @@ namespace CodingInterview
             return numbersWithTwoDuplicates.ToArray();
         }
 
-        int[] RemoveElement(int[] arrayOfNumbers, int elementToRemove)
+        private static int[] RemoveElement(IReadOnlyCollection<int> arrayOfNumbers, int elementToRemove)
         {
             return arrayOfNumbers
                 .Where(element => element != elementToRemove)
                 .ToArray();
         }
 
-        int[] MoveZeros(int[] arrayOfNumbers)
+        private static int[] MoveZeros(IReadOnlyList<int> arrayOfNumbers)
         {
             var zeroCount = 0;
             var listOfElements = new List<int>();
-            for (int index = 0; index < arrayOfNumbers.Length; index++)
+            foreach (var actualElement in arrayOfNumbers)
             {
-                var actualElement = arrayOfNumbers[index];
                 if (actualElement == 0)
                 {
                     zeroCount++;
@@ -68,28 +66,25 @@ namespace CodingInterview
             return listOfElements.ToArray();
         }
 
-        int[] GetProductofArrayExceptSelf(int[] inputArray)
+        private static int[] GetProductofArrayExceptSelf(IReadOnlyList<int> inputArray)
         {
-            if (inputArray == null || inputArray.Length == 0)
+            if (inputArray == null || inputArray.Count == 0)
                 throw new ArgumentNullException("inputArray needs to have elements");
-            var outputArray = new List<int>();
-            for (int index = 0; index < inputArray.Length; index++)
-            {
-                outputArray.Add(inputArray
-                    .Where(element => element != inputArray[index])
-                    .Aggregate((firstElement, secondElement) => firstElement * secondElement));
-            }
-            return outputArray.ToArray();
+
+            return inputArray
+                .Select(arrayElement => inputArray.Where(element => element != arrayElement)
+                .Aggregate((firstElement, secondElement) => firstElement * secondElement))
+                .ToArray();
         }
 
-        int[] GetMinimumSizeSubarraySum(int[] inputArray, int n)
+        private static int[] GetMinimumSizeSubarraySum(IReadOnlyList<int> inputArray, int n)
         {
             var listOfSums = new List<int>();
             var listOfNumbers = new List<int>();
             var sum = 0;
-            for (int subArraySize = 2; subArraySize <= inputArray.Length - 1; subArraySize++)
+            for (var subArraySize = 2; subArraySize <= inputArray.Count - 1; subArraySize++)
             {
-                for (int index = 0; index <= inputArray.Length - 1; index++)
+                for (var index = 0; index <= inputArray.Count - 1; index++)
                 {
                     sum += inputArray[index];
                     listOfNumbers.Add(inputArray[index]);
@@ -104,39 +99,38 @@ namespace CodingInterview
                         listOfSums.Add(sum);
                         sum = 0;
                         listOfNumbers.Clear();
-                        continue;
                     }
                 }
             }
             return null;
         }
 
-        string[] GetSummaryRanges(int[] inputArray)
+        private static string[] GetSummaryRanges(int[] inputArray)
         {
             if (inputArray == null || inputArray.Length == 0)
                 throw new ArgumentNullException("inputArray needs to have elements");
 
             var listOfAnswers = new List<string>();
 
-            for (int index = 0; index < inputArray.Length; index++)
+            for (var index = 0; index < inputArray.Length; index++)
             {
                 var firstString = string.Empty;
-                bool found = false;
-                for (int insideIndex = index; insideIndex < inputArray.Length; insideIndex++)
+                var isFounded = false;
+                for (var insideIndex = index; insideIndex < inputArray.Length; insideIndex++)
                 {
                     if (insideIndex + 1 < inputArray.Length && (inputArray[insideIndex + 1] - inputArray[insideIndex] == 1))
                     {
-                        if (!found)
+                        if (!isFounded)
                         {
                             firstString = $"{inputArray[insideIndex]}";
                         }
-                        found = true;
+                        isFounded = true;
                     }
                     else
                     {
-                        if (found)
+                        if (isFounded)
                         {
-                            string endString = inputArray[insideIndex].ToString();
+                            var endString = inputArray[insideIndex].ToString();
                             listOfAnswers.Add($"{firstString}->{endString}");
                             index = insideIndex;
                             break;
@@ -151,43 +145,26 @@ namespace CodingInterview
             return listOfAnswers.ToArray();
         }
 
-        string[] GetMissingRanges(int lower, int upper, int[] inputArray)
+        private static string[] GetMissingRanges(int lower, int upper, IReadOnlyCollection<int> inputArray)
         {
-            if (inputArray == null || inputArray.Length == 0)
+            if (inputArray == null || inputArray.Count == 0)
                 throw new ArgumentNullException("InputArray needs to have elements");
 
             if (lower > upper && lower >= 0 && upper >= 0)
                 throw new ArgumentException("Correct arguments");
 
             var negativeList = Enumerable.Range(lower, upper - lower + 1)
-               .Where(element => !inputArray.Any(item => item == element));
+               .Where(element => inputArray.All(item => item != element));
 
             return GetSummaryRanges(negativeList.ToArray());
         }
 
-        int[][] GetMergeIntervals(int[][] inputArray)
+        private static int[][] GetMergeIntervals()
         {
-            //given
-            //var inputArray = new int[][] {
-            //    new int[] { 1, 3 },
-            //    new int[] { 2, 6 },
-            //    new int[] { 8, 10 },
-            //    new int[] { 15, 18 }
-            //};
-            //var expectedArray = new int[][] {
-            //    new int[] { 1, 6 },
-            //    new int[] { 8, 10 },
-            //    new int[] { 15, 18 }
-            //};
-
-            for (var index = 1; index < inputArray.Length; index += 2)
-            {
-
-            }
-            return inputArray;
+            return null;
         }
 
-        public bool CheckIfStringIsPalindrome(string message)
+        private static bool CheckIfStringIsPalindrome(string message)
         {
             if (string.IsNullOrEmpty(message))
                 return false;
@@ -205,7 +182,7 @@ namespace CodingInterview
         private static string GetAlphabeticString(string message)
         {
             var alphabeticMessageArray = message.ToCharArray().Where(element => (element >= 'a' && element <= 'z') || (element >= 'A' && element <= 'Z'));
-            string alphabeticMessageString = string.Join("", alphabeticMessageArray).ToLower();
+            var alphabeticMessageString = string.Join("", alphabeticMessageArray).ToLower();
             return alphabeticMessageString;
         }
 
@@ -213,8 +190,8 @@ namespace CodingInterview
         public void RemoveDuplicatesFromSortedArray_1()
         {
             //given
-            var sortedArrayWithDuplicates = new int[] { 1, 3, 3, 6, 8, 8, 9 };
-            var expectedSortedArrayWithoutDuplicates = new int[] { 1, 3, 6, 8, 9 };
+            var sortedArrayWithDuplicates = new [] { 1, 3, 3, 6, 8, 8, 9 };
+            var expectedSortedArrayWithoutDuplicates = new [] { 1, 3, 6, 8, 9 };
             //when
             var sortedArrayWithoutDuplicatesCalculated = RemoveDuplicates(sortedArrayWithDuplicates);
             //then
@@ -225,8 +202,8 @@ namespace CodingInterview
         public void RemoveDuplicatesFromSortedArray_2()
         {
             //given
-            var sortedArrayWithDuplicates = new int[] { 1, 3, 3, 3, 6, 8, 8, 9, 9, 9 };
-            var expectedSortedArrayWithTwoDuplicates = new int[] { 1, 3, 3, 6, 8, 8, 9, 9 };
+            var sortedArrayWithDuplicates = new [] { 1, 3, 3, 3, 6, 8, 8, 9, 9, 9 };
+            var expectedSortedArrayWithTwoDuplicates = new [] { 1, 3, 3, 6, 8, 8, 9, 9 };
             //when
             var sortedArrayWithTwoDuplicatesCalculated = LeaveTwoDuplicates(sortedArrayWithDuplicates);
             //then
@@ -237,8 +214,8 @@ namespace CodingInterview
         public void RemoveElement_3()
         {
             //given
-            var arrayWithElements = new int[] { 1, 5, 3, 3, 6, 1, 8, 3, 9, 7 };
-            var expectedArrayWithElements = new int[] { 1, 5, 6, 1, 8, 9, 7 };
+            var arrayWithElements = new [] { 1, 5, 3, 3, 6, 1, 8, 3, 9, 7 };
+            var expectedArrayWithElements = new [] { 1, 5, 6, 1, 8, 9, 7 };
             var elementToRemove = 3;
             //when
             var arrayWithRemoveElement = RemoveElement(arrayWithElements, elementToRemove);
@@ -250,8 +227,8 @@ namespace CodingInterview
         public void MoveZeros_4()
         {
             //given
-            var arrayWithZeros = new int[] { 1, 0, 5, 0, 0, 3 };
-            var expectedArrayWithZerosInTheEnd = new int[] { 1, 5, 3, 0, 0, 0 };
+            var arrayWithZeros = new [] { 1, 0, 5, 0, 0, 3 };
+            var expectedArrayWithZerosInTheEnd = new [] { 1, 5, 3, 0, 0, 0 };
             //when
             var arrayWithRemoveElement = MoveZeros(arrayWithZeros);
             //then
@@ -262,8 +239,8 @@ namespace CodingInterview
         public void ProductofArrayExceptSelf_7()
         {
             //given
-            var inputArray = new int[] { 1, 2, 3, 4 };
-            var expectedArray = new int[] { 24, 12, 8, 6 };
+            var inputArray = new [] { 1, 2, 3, 4 };
+            var expectedArray = new [] { 24, 12, 8, 6 };
             //when
             var outputArray = GetProductofArrayExceptSelf(inputArray);
             //then
@@ -274,9 +251,9 @@ namespace CodingInterview
         public void MinimumSizeSubarraySum_8()
         {
             //given
-            var inputArray = new int[] { 2, 3, 1, 2, 4, 3 };
+            var inputArray = new [] { 2, 3, 1, 2, 4, 3 };
             int n = 7;
-            var expectedArray = new int[] { 4, 3 };
+            var expectedArray = new [] { 4, 3 };
             //when
             var outputArray = GetMinimumSizeSubarraySum(inputArray, n);
             //then
@@ -287,8 +264,8 @@ namespace CodingInterview
         public void SummaryRanges_9()
         {
             //given
-            var inputArray = new int[] { 0, 1, 2, 4, 5, 7 };
-            var expectedArray = new string[] { "0->2", "4->5", "7" };
+            var inputArray = new [] { 0, 1, 2, 4, 5, 7 };
+            var expectedArray = new [] { "0->2", "4->5", "7" };
             //when
             var outputArray = GetSummaryRanges(inputArray);
             //then
@@ -299,10 +276,10 @@ namespace CodingInterview
         public void MissingRanges_10()
         {
             //given
-            var inputArray = new int[] { 0, 1, 3, 50, 75 };
+            var inputArray = new [] { 0, 1, 3, 50, 75 };
             int lower = 0;
             int upper = 99;
-            var expectedArray = new string[] { "2", "4->49", "51->74", "76->99" };
+            var expectedArray = new [] { "2", "4->49", "51->74", "76->99" };
             //when
             var outputArray = GetMissingRanges(lower, upper, inputArray);
             //then
@@ -313,19 +290,21 @@ namespace CodingInterview
         public void MergeIntervals_11()
         {
             //given
-            var inputArray = new int[][] {
-                new int[] { 1, 3 },
-                new int[] { 2, 6 },
-                new int[] { 8, 10 },
-                new int[] { 15, 18 }
+            var inputArray = new[]
+            {
+                new [] { 1, 3 },
+                new [] { 2, 6 },
+                new [] { 8, 10 },
+                new [] { 15, 18 }
             };
-            var expectedArray = new int[][] {
-                new int[] { 1, 6 },
-                new int[] { 8, 10 },
-                new int[] { 15, 18 }
+            var expectedArray = new[]
+            {
+                new [] { 1, 6 },
+                new [] { 8, 10 },
+                new [] { 15, 18 }
             };
             //when
-            var outputArray = GetMergeIntervals(inputArray);
+            var outputArray = GetMergeIntervals();
             //then
             Assert.AreEqual(expectedArray, outputArray);
         }
