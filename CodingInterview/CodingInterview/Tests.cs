@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace CodingInterview
 {
@@ -10,7 +11,7 @@ namespace CodingInterview
         int[] RemoveDuplicates(int[] arrayOfNumbers)
         {
             var numbers = new HashSet<int>();
-            for(int index = 0; index < arrayOfNumbers.Length; index++)
+            for (int index = 0; index < arrayOfNumbers.Length; index++)
             {
                 numbers.Add(arrayOfNumbers[index]);
             }
@@ -27,7 +28,7 @@ namespace CodingInterview
             }
 
             for (int index = 0; index < numbers.Count; index++)
-            { 
+            {
                 var actualValue = numbers.ElementAt(index);
                 if (arrayOfNumbers.Where(element => element == actualValue).Count() >= 2)
                 {
@@ -49,7 +50,7 @@ namespace CodingInterview
         {
             var zeroCount = 0;
             var listOfElements = new List<int>();
-            for(int index = 0; index < arrayOfNumbers.Length; index++)
+            for (int index = 0; index < arrayOfNumbers.Length; index++)
             {
                 var actualElement = arrayOfNumbers[index];
                 if (actualElement == 0)
@@ -67,7 +68,7 @@ namespace CodingInterview
             return listOfElements.ToArray();
         }
 
-        int [] GetProductofArrayExceptSelf(int [] inputArray)
+        int[] GetProductofArrayExceptSelf(int[] inputArray)
         {
             if (inputArray == null || inputArray.Length == 0)
                 throw new ArgumentNullException("inputArray needs to have elements");
@@ -86,15 +87,15 @@ namespace CodingInterview
             var listOfSums = new List<int>();
             var listOfNumbers = new List<int>();
             var sum = 0;
-            for(int subArraySize = 2; subArraySize <= inputArray.Length - 1; subArraySize++)
-            { 
+            for (int subArraySize = 2; subArraySize <= inputArray.Length - 1; subArraySize++)
+            {
                 for (int index = 0; index <= inputArray.Length - 1; index++)
                 {
                     sum += inputArray[index];
                     listOfNumbers.Add(inputArray[index]);
                     if (index % subArraySize == 1 && index != 0)
                     {
-                        if(sum >= n)
+                        if (sum >= n)
                         {
                             listOfNumbers.ForEach(element => Console.Write(element + " "));
                             Console.WriteLine($"sum = {sum}");
@@ -110,22 +111,22 @@ namespace CodingInterview
             return null;
         }
 
-        string[] GetSummaryRanges(int [] inputArray)
+        string[] GetSummaryRanges(int[] inputArray)
         {
             if (inputArray == null || inputArray.Length == 0)
                 throw new ArgumentNullException("inputArray needs to have elements");
 
             var listOfAnswers = new List<string>();
 
-            for(int index = 0; index < inputArray.Length; index++)
+            for (int index = 0; index < inputArray.Length; index++)
             {
                 var firstString = string.Empty;
                 bool found = false;
-                for(int insideIndex = index; insideIndex < inputArray.Length; insideIndex++)
+                for (int insideIndex = index; insideIndex < inputArray.Length; insideIndex++)
                 {
-                    if(insideIndex + 1 < inputArray.Length && (inputArray[insideIndex + 1] - inputArray[insideIndex] == 1))
+                    if (insideIndex + 1 < inputArray.Length && (inputArray[insideIndex + 1] - inputArray[insideIndex] == 1))
                     {
-                        if(!found)
+                        if (!found)
                         {
                             firstString = $"{inputArray[insideIndex]}";
                         }
@@ -133,7 +134,7 @@ namespace CodingInterview
                     }
                     else
                     {
-                        if(found)
+                        if (found)
                         {
                             string endString = inputArray[insideIndex].ToString();
                             listOfAnswers.Add($"{firstString}->{endString}");
@@ -155,7 +156,7 @@ namespace CodingInterview
             if (inputArray == null || inputArray.Length == 0)
                 throw new ArgumentNullException("InputArray needs to have elements");
 
-            if(lower > upper && lower >= 0 && upper >= 0)
+            if (lower > upper && lower >= 0 && upper >= 0)
                 throw new ArgumentException("Correct arguments");
 
             var negativeList = Enumerable.Range(lower, upper - lower + 1)
@@ -166,10 +167,49 @@ namespace CodingInterview
 
         int[][] GetMergeIntervals(int[][] inputArray)
         {
+            //given
+            //var inputArray = new int[][] {
+            //    new int[] { 1, 3 },
+            //    new int[] { 2, 6 },
+            //    new int[] { 8, 10 },
+            //    new int[] { 15, 18 }
+            //};
+            //var expectedArray = new int[][] {
+            //    new int[] { 1, 6 },
+            //    new int[] { 8, 10 },
+            //    new int[] { 15, 18 }
+            //};
+
+            for (var index = 1; index < inputArray.Length; index += 2)
+            {
+
+            }
             return inputArray;
         }
 
-       [Test]
+        public bool CheckIfStringIsPalindrome(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+                return false;
+            var alphabeticMessageString = GetAlphabeticString(message);
+            for (var index = 0; index < alphabeticMessageString.Length / 2; index++)
+            {
+                if (alphabeticMessageString[index] != alphabeticMessageString[alphabeticMessageString.Length - 1 - index])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static string GetAlphabeticString(string message)
+        {
+            var alphabeticMessageArray = message.ToCharArray().Where(element => (element >= 'a' && element <= 'z') || (element >= 'A' && element <= 'Z'));
+            string alphabeticMessageString = string.Join("", alphabeticMessageArray).ToLower();
+            return alphabeticMessageString;
+        }
+
+        [Test]
         public void RemoveDuplicatesFromSortedArray_1()
         {
             //given
@@ -210,7 +250,7 @@ namespace CodingInterview
         public void MoveZeros_4()
         {
             //given
-            var arrayWithZeros = new int[] { 1, 0, 5, 0, 0, 3};
+            var arrayWithZeros = new int[] { 1, 0, 5, 0, 0, 3 };
             var expectedArrayWithZerosInTheEnd = new int[] { 1, 5, 3, 0, 0, 0 };
             //when
             var arrayWithRemoveElement = MoveZeros(arrayWithZeros);
@@ -222,7 +262,7 @@ namespace CodingInterview
         public void ProductofArrayExceptSelf_7()
         {
             //given
-            var inputArray = new int[] { 1, 2, 3, 4};
+            var inputArray = new int[] { 1, 2, 3, 4 };
             var expectedArray = new int[] { 24, 12, 8, 6 };
             //when
             var outputArray = GetProductofArrayExceptSelf(inputArray);
@@ -247,7 +287,7 @@ namespace CodingInterview
         public void SummaryRanges_9()
         {
             //given
-            var inputArray = new int[] { 0, 1, 2, 4, 5, 7};
+            var inputArray = new int[] { 0, 1, 2, 4, 5, 7 };
             var expectedArray = new string[] { "0->2", "4->5", "7" };
             //when
             var outputArray = GetSummaryRanges(inputArray);
@@ -289,5 +329,16 @@ namespace CodingInterview
             //then
             Assert.AreEqual(expectedArray, outputArray);
         }
-}
+
+        [Test]
+        public void ValidPalindrome_22()
+        {
+            //given
+            var inputString = "Red rum, sir, is murder";
+            //when
+            var isPalindrome = CheckIfStringIsPalindrome(inputString);
+            //then
+            Assert.AreEqual(true, isPalindrome);
+        }
+    }
 }
