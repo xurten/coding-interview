@@ -69,7 +69,7 @@ namespace CodingInterview
         private static int[] GetProductofArrayExceptSelf(IReadOnlyList<int> inputArray)
         {
             if (inputArray == null || inputArray.Count == 0)
-                throw new ArgumentNullException("inputArray needs to have elements");
+                throw new ArgumentNullException(nameof(inputArray), "inputArray needs to have elements");
 
             return inputArray
                 .Select(arrayElement => inputArray.Where(element => element != arrayElement)
@@ -108,7 +108,7 @@ namespace CodingInterview
         private static string[] GetSummaryRanges(int[] inputArray)
         {
             if (inputArray == null || inputArray.Length == 0)
-                throw new ArgumentNullException("inputArray needs to have elements");
+                throw new ArgumentNullException(nameof(inputArray), "inputArray needs to have elements");
 
             var listOfAnswers = new List<string>();
 
@@ -148,7 +148,7 @@ namespace CodingInterview
         private static string[] GetMissingRanges(int lower, int upper, IReadOnlyCollection<int> inputArray)
         {
             if (inputArray == null || inputArray.Count == 0)
-                throw new ArgumentNullException("InputArray needs to have elements");
+                throw new ArgumentNullException(nameof(inputArray), "InputArray needs to have elements");
 
             if (lower > upper && lower >= 0 && upper >= 0)
                 throw new ArgumentException("Correct arguments");
@@ -290,13 +290,6 @@ namespace CodingInterview
         public void MergeIntervals_11()
         {
             //given
-            var inputArray = new[]
-            {
-                new [] { 1, 3 },
-                new [] { 2, 6 },
-                new [] { 8, 10 },
-                new [] { 15, 18 }
-            };
             var expectedArray = new[]
             {
                 new [] { 1, 6 },
