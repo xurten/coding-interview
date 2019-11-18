@@ -203,7 +203,53 @@ namespace CodingInterview
             return false;
         }
 
-        [Test]
+        private static bool CheckIfUgly(int number)
+        {
+            if(number < 0)
+                throw new ArgumentException(nameof(number), "number should be positive");
+
+            switch (number)
+            {
+                case 0:
+                    return false;
+                case 1:
+                    return true;
+            }
+
+            while (number >= 0)
+            {
+                switch (number)
+                {
+                    case 0:
+                        return false;
+                    case 1:
+                        return true;
+                }
+
+                if (number % 2 == 0)
+                {
+                    number /= 2;
+                    continue;
+                }
+
+                if (number % 3 == 0)
+                {
+                    number /= 3;
+                    continue;
+                }
+
+                if (number % 5 == 0)
+                {
+                    number /= 5;
+                    continue;
+                }
+                return false;
+
+            }
+            return false;
+        }
+
+       [Test]
         public void RemoveDuplicatesFromSortedArray_1()
         {
             //given
@@ -341,5 +387,22 @@ namespace CodingInterview
             //then
             Assert.AreEqual(isDuplicateElement, isPalindrome);
         }
+
+        [Test]
+        [TestCase(8, true)]
+        [TestCase(7, false)]
+        [TestCase(0, false)]
+        [TestCase(1, true)]
+        [TestCase(10, true)]
+        [TestCase(13, false)]
+        public void CheckUglyNumbers_99(int number, bool isUgly)
+        {
+            //given
+            //when
+            var isPalindrome = CheckIfUgly(number);
+            //then
+            Assert.AreEqual(isUgly, isPalindrome);
+        }
+
     }
 }
