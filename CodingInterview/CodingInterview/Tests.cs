@@ -249,6 +249,21 @@ namespace CodingInterview
             return false;
         }
 
+        public int[] GenerateUglyNumbersArray(int count)
+        {
+            var list = new HashSet<int> {1};
+            for (var index = 1; index <= count; index++)
+            {
+                list.Add(index * 2);
+                list.Add(index * 3);
+                list.Add(index * 5);
+            }
+
+            var newList = list.ToList();
+            newList.Sort();
+            return newList.Take(count).ToArray();
+        }
+
        [Test]
         public void RemoveDuplicatesFromSortedArray_1()
         {
@@ -383,9 +398,9 @@ namespace CodingInterview
         {
             //given
             //when
-            var isPalindrome = CheckIfArrayContainsDuplicatedElements(inputArray);
+            var containsDuplicateStatus = CheckIfArrayContainsDuplicatedElements(inputArray);
             //then
-            Assert.AreEqual(isDuplicateElement, isPalindrome);
+            Assert.AreEqual(isDuplicateElement, containsDuplicateStatus);
         }
 
         [Test]
@@ -399,10 +414,20 @@ namespace CodingInterview
         {
             //given
             //when
-            var isPalindrome = CheckIfUgly(number);
+            var uglyStatus = CheckIfUgly(number);
             //then
-            Assert.AreEqual(isUgly, isPalindrome);
+            Assert.AreEqual(isUgly, uglyStatus);
         }
 
+        [Test]
+        [TestCase(10, new []{ 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 })]
+        public void CheckUglyNumbers2_100(int numberOfUglyNumbers, int[] arrayWithUglyNumbers)
+        {
+            //given
+            //when
+            var arrayWithUglyNumbersGenerated = GenerateUglyNumbersArray(numberOfUglyNumbers);
+            //then
+            Assert.AreEqual(arrayWithUglyNumbers, arrayWithUglyNumbersGenerated);
+        }
     }
 }
