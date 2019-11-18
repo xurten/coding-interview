@@ -186,6 +186,23 @@ namespace CodingInterview
             return alphabeticMessageString;
         }
 
+        private static bool CheckIfArrayContainsDuplicatedElements(int[] inputArray)
+        {
+            if (inputArray == null || inputArray.Length == 0)
+                throw new ArgumentNullException(nameof(inputArray), "inputArray needs to have elements");
+
+            var hashSet = new HashSet<int>();
+            foreach (var element in inputArray)
+            {
+                if (hashSet.Contains(element))
+                {
+                    return true;
+                }
+                hashSet.Add(element);
+            }
+            return false;
+        }
+
         [Test]
         public void RemoveDuplicatesFromSortedArray_1()
         {
@@ -311,6 +328,18 @@ namespace CodingInterview
             var isPalindrome = CheckIfStringIsPalindrome(inputString);
             //then
             Assert.AreEqual(true, isPalindrome);
+        }
+
+        [Test]
+        [TestCase(new[] { 0, 1, 2, 4, 4, 5, 7 }, true)]
+        [TestCase(new[] { 0, 1, 2, 4, 5, 7 }, false)]
+        public void ContainsDuplicates_82(int []inputArray, bool isDuplicateElement)
+        {
+            //given
+            //when
+            var isPalindrome = CheckIfArrayContainsDuplicatedElements(inputArray);
+            //then
+            Assert.AreEqual(isDuplicateElement, isPalindrome);
         }
     }
 }
