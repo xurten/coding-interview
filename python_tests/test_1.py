@@ -2,7 +2,7 @@
 # Writing “Hello, World!” program.
 
 # Implementation
-def get_hello_world():
+def get_hello_world() -> str:
     return "Hello, World!"
 
 # Test Section

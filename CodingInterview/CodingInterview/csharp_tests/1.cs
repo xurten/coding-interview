@@ -14,8 +14,8 @@ namespace CodingInterview
         [Test]
         public void CheckGetHelloWorldFunction()
         {
-            var Expected_String = "Hello World!";
-            Assert.AreEqual(GetHelloWorld(), Expected_String);
+            var ExpectedString = "Hello World!";
+            Assert.AreEqual(GetHelloWorld(), ExpectedString);
         }
     }
 
