@@ -1,3 +1,7 @@
 # Coding Interview
 
-In CodingInterview\CodingInterview\Tests.cs there are coding interview tasks(methods and tests)
+
+*Project contains python and C# interview tasks:*
+
+![image](https://user-images.githubusercontent.com/7273568/208259037-a5044181-b6e7-44be-b678-a9f660a97456.png)
+
