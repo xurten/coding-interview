@@ -13,7 +13,7 @@ def get_fibonacci_recursive(n: int) -> int:
 
 def get_fibonacci_iterative(n: int) -> int:
     fibonacci_first, fibonacci_second = 0, 1
-    for i in range(1, n+1):
+    for i in range(1, n + 1):
         fibonacci_first, fibonacci_second = fibonacci_second, fibonacci_first + fibonacci_second
     return fibonacci_first
 
@@ -29,6 +29,7 @@ def test_fibonacci_recursive_bigger():
     n = 20
     expected_value = 6765
     assert get_fibonacci_recursive(n) == expected_value
+
 
 def test_fibonacci_iterative_small():
     n = 7

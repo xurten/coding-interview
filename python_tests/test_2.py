@@ -3,8 +3,7 @@
 
 # Implementation
 def get_even_numbers(n: int) -> []:
-    even_number = lambda x: x % 2 == 0
-    even_number_list = filter(even_number, range(1, n))
+    even_number_list = filter(lambda x: x % 2 == 0, range(1, n))
     return list(even_number_list)
 
 

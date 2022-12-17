@@ -1,12 +1,14 @@
+# Task 5
+# Write a program to reverse a string
 import pytest
 
 
-def reverse_string(input):
-    if not input:
+def reverse_string(message):
+    if not message:
         raise Exception("String cannot be empty")
-    if not input.isascii():
+    if not message.isascii():
         raise Exception("String cannot be digits or other special characters")
-    tmp = input.split(" ")
+    tmp = message.split(" ")
     return " ".join(tmp[::-1])
 
 
@@ -23,6 +25,6 @@ def test_reverse_string_empty():
 
 
 def test_reverse_string_with_bool():
-    input_string = True
+    message = True
     with pytest.raises(Exception):
-        reverse_string(input_string)
+        reverse_string(message)
