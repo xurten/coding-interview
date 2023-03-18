@@ -1,6 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
 
+// Task 7
+// Write a program to check if a number is a prime number
 namespace CodingInterview
 {
     public class Class7
