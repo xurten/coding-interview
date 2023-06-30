@@ -21,7 +21,6 @@ def get_fibonacci_iterative(n: int) -> int:
     return fibonacci_first
 
 
-# Test Section
 @pytest.mark.parametrize("n, expected_value", [(7, 13), (20, 6765)])
 def test_fibonacci_recursive(n, expected_value):
     assert get_fibonacci_recursive(n) == expected_value
