@@ -1,5 +1,5 @@
 # Task 1
-# Writing “Hello, World!” program.
+# Write “Hello, World!” program.
 
 # Implementation
 def get_hello_world() -> str:

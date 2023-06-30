@@ -1,6 +1,5 @@
 # Task 7
 # Write a program to check if a number is a prime number
-from py import test
 
 
 def is_prime(number):
@@ -10,10 +9,11 @@ def is_prime(number):
             prime_status = False
             break
     return prime_status
-test.
+
+
 def test_prime_number():
-    assert is_prime(13)
+    assert is_prime(13) == True
 
 
 def test_not_prime_number():
-    assert not is_prime(2000)
+    assert is_prime(2000) == False

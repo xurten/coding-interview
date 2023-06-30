@@ -2,6 +2,9 @@
 # Write a program to calculate fibonacci
 
 # Implementation
+import pytest
+
+
 def get_fibonacci_recursive(n: int) -> int:
     if n == 0:
         return 0
@@ -19,25 +22,11 @@ def get_fibonacci_iterative(n: int) -> int:
 
 
 # Test Section
-def test_fibonacci_recursive_small():
-    n = 7
-    expected_value = 13
+@pytest.mark.parametrize("n, expected_value", [(7, 13), (20, 6765)])
+def test_fibonacci_recursive(n, expected_value):
     assert get_fibonacci_recursive(n) == expected_value
 
 
-def test_fibonacci_recursive_bigger():
-    n = 20
-    expected_value = 6765
-    assert get_fibonacci_recursive(n) == expected_value
-
-
-def test_fibonacci_iterative_small():
-    n = 7
-    expected_value = 13
-    assert get_fibonacci_iterative(n) == expected_value
-
-
-def test_fibonacci_iterative_bigger():
-    n = 20
-    expected_value = 6765
+@pytest.mark.parametrize("n, expected_value", [(7, 13), (20, 6765)])
+def test_fibonacci_iterative(n, expected_value):
     assert get_fibonacci_iterative(n) == expected_value

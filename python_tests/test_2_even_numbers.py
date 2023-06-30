@@ -8,13 +8,13 @@ def get_even_numbers(n: int) -> []:
 
 
 # Test Section
-def test_even_numbers_10():
+def test_even_numbers():
     n = 10
     expected_list = [2, 4, 6, 8]
     assert get_even_numbers(n) == expected_list
 
 
-def test_even_numbers_20():
+def test_even_numbers():
     n = 20
     expected_list = [2, 4, 6, 8, 10, 12, 14, 16, 18]
     assert get_even_numbers(n) == expected_list
